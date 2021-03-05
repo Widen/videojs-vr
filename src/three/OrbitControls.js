@@ -963,5 +963,4 @@ Object.defineProperties(OrbitControls.prototype, {
   },
 });
 
-OrbitControls = OrbitControls;
 export default OrbitControls;
