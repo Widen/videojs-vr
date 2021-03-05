@@ -3,18 +3,19 @@
  * @author mrdoob / http://mrdoob.com
  */
 
-import * as THREE from 'three';
+import * as THREE from "three";
 
-const VRControls = function(object, onError) {
+const VRControls = function (object, onError) {
   const scope = this;
 
-  let vrDisplay; let vrDisplays;
+  let vrDisplay;
+  let vrDisplays;
 
   const standingMatrix = new THREE.Matrix4();
 
   let frameData = null;
 
-  if ('VRFrameData' in window) {
+  if ("VRFrameData" in window) {
     frameData = new VRFrameData();
   }
 
@@ -24,7 +25,7 @@ const VRControls = function(object, onError) {
     if (displays.length > 0) {
       vrDisplay = displays[0];
     } else if (onError) {
-      onError('VR input not available.');
+      onError("VR input not available.");
     }
   }
 
@@ -32,8 +33,8 @@ const VRControls = function(object, onError) {
     navigator
       .getVRDisplays()
       .then(gotVRDisplays)
-      .catch(function() {
-        console.warn('THREE.VRControls: Unable to get VR Displays');
+      .catch(function () {
+        console.warn("VRControls: Unable to get VR Displays");
       });
   }
 
@@ -51,24 +52,24 @@ const VRControls = function(object, onError) {
   // standing=true but the VRDisplay doesn't provide stageParameters.
   this.userHeight = 1.6;
 
-  this.getVRDisplay = function() {
+  this.getVRDisplay = function () {
     return vrDisplay;
   };
 
-  this.setVRDisplay = function(value) {
+  this.setVRDisplay = function (value) {
     vrDisplay = value;
   };
 
-  this.getVRDisplays = function() {
-    console.warn('THREE.VRControls: getVRDisplays() is being deprecated.');
+  this.getVRDisplays = function () {
+    console.warn("VRControls: getVRDisplays() is being deprecated.");
     return vrDisplays;
   };
 
-  this.getStandingMatrix = function() {
+  this.getStandingMatrix = function () {
     return standingMatrix;
   };
 
-  this.update = function() {
+  this.update = function () {
     if (vrDisplay) {
       let pose;
 
@@ -93,7 +94,9 @@ const VRControls = function(object, onError) {
         if (vrDisplay.stageParameters) {
           object.updateMatrix();
 
-          standingMatrix.fromArray(vrDisplay.stageParameters.sittingToStandingTransform);
+          standingMatrix.fromArray(
+            vrDisplay.stageParameters.sittingToStandingTransform
+          );
           object.applyMatrix(standingMatrix);
         } else {
           object.position.setY(object.position.y + this.userHeight);
@@ -104,10 +107,9 @@ const VRControls = function(object, onError) {
     }
   };
 
-  this.dispose = function() {
+  this.dispose = function () {
     vrDisplay = null;
   };
 };
 
-THREE.VRControls = VRControls;
 export default VRControls;

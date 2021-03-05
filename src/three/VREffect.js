@@ -7,20 +7,22 @@
  * Firefox: http://mozvr.com/downloads/
  * Chromium: https://webvr.info/get-chrome
  */
-import * as THREE from 'three';
+import * as THREE from "three";
 
-const VREffect = function(renderer, onError) {
-  let vrDisplay; let vrDisplays;
+const VREffect = function (renderer, onError) {
+  let vrDisplay;
+  let vrDisplays;
   const eyeTranslationL = new THREE.Vector3();
   const eyeTranslationR = new THREE.Vector3();
-  let renderRectL; let renderRectR;
+  let renderRectL;
+  let renderRectR;
   const headMatrix = new THREE.Matrix4();
   const eyeMatrixL = new THREE.Matrix4();
   const eyeMatrixR = new THREE.Matrix4();
 
   let frameData = null;
 
-  if ('VRFrameData' in window) {
+  if ("VRFrameData" in window) {
     frameData = new window.VRFrameData();
   }
 
@@ -30,7 +32,7 @@ const VREffect = function(renderer, onError) {
     if (displays.length > 0) {
       vrDisplay = displays[0];
     } else if (onError) {
-      onError('HMD not available');
+      onError("HMD not available");
     }
   }
 
@@ -38,8 +40,8 @@ const VREffect = function(renderer, onError) {
     navigator
       .getVRDisplays()
       .then(gotVRDisplays)
-      .catch(function() {
-        console.warn('THREE.VREffect: Unable to get VR Displays');
+      .catch(function () {
+        console.warn("VREffect: Unable to get VR Displays");
       });
   }
 
@@ -53,25 +55,25 @@ const VREffect = function(renderer, onError) {
   let rendererUpdateStyle = false;
   let rendererPixelRatio = renderer.getPixelRatio();
 
-  this.getVRDisplay = function() {
+  this.getVRDisplay = function () {
     return vrDisplay;
   };
 
-  this.setVRDisplay = function(value) {
+  this.setVRDisplay = function (value) {
     vrDisplay = value;
   };
 
-  this.getVRDisplays = function() {
-    console.warn('THREE.VREffect: getVRDisplays() is being deprecated.');
+  this.getVRDisplays = function () {
+    console.warn("VREffect: getVRDisplays() is being deprecated.");
     return vrDisplays;
   };
 
-  this.setSize = function(width, height, updateStyle) {
+  this.setSize = function (width, height, updateStyle) {
     rendererSize = { width, height };
     rendererUpdateStyle = updateStyle;
 
     if (scope.isPresenting) {
-      const eyeParamsL = vrDisplay.getEyeParameters('left');
+      const eyeParamsL = vrDisplay.getEyeParameters("left");
 
       renderer.setPixelRatio(1);
       renderer.setSize(
@@ -97,7 +99,7 @@ const VREffect = function(renderer, onError) {
     scope.isPresenting = vrDisplay !== undefined && vrDisplay.isPresenting;
 
     if (scope.isPresenting) {
-      const eyeParamsL = vrDisplay.getEyeParameters('left');
+      const eyeParamsL = vrDisplay.getEyeParameters("left");
       const eyeWidth = eyeParamsL.renderWidth;
       const eyeHeight = eyeParamsL.renderHeight;
 
@@ -119,15 +121,15 @@ const VREffect = function(renderer, onError) {
   }
 
   window.addEventListener(
-    'vrdisplaypresentchange',
+    "vrdisplaypresentchange",
     onVRDisplayPresentChange,
     false
   );
 
-  this.setFullScreen = function(boolean) {
-    return new Promise(function(resolve, reject) {
+  this.setFullScreen = function (boolean) {
+    return new Promise(function (resolve, reject) {
       if (vrDisplay === undefined) {
-        reject(new Error('No VR hardware found.'));
+        reject(new Error("No VR hardware found."));
         return;
       }
 
@@ -144,23 +146,22 @@ const VREffect = function(renderer, onError) {
     });
   };
 
-  this.requestPresent = function() {
+  this.requestPresent = function () {
     return this.setFullScreen(true);
   };
 
-  this.exitPresent = function() {
+  this.exitPresent = function () {
     return this.setFullScreen(false);
   };
 
-  this.requestAnimationFrame = function(f) {
+  this.requestAnimationFrame = function (f) {
     if (vrDisplay !== undefined) {
       return vrDisplay.requestAnimationFrame(f);
     }
     return window.requestAnimationFrame(f);
-
   };
 
-  this.cancelAnimationFrame = function(h) {
+  this.cancelAnimationFrame = function (h) {
     if (vrDisplay !== undefined) {
       vrDisplay.cancelAnimationFrame(h);
     } else {
@@ -168,7 +169,7 @@ const VREffect = function(renderer, onError) {
     }
   };
 
-  this.submitFrame = function() {
+  this.submitFrame = function () {
     if (vrDisplay !== undefined && scope.isPresenting) {
       vrDisplay.submitFrame();
     }
@@ -186,7 +187,7 @@ const VREffect = function(renderer, onError) {
 
   cameraR.layers.enable(2);
 
-  this.render = function(scene, camera, renderTarget, forceClear) {
+  this.render = function (scene, camera, renderTarget, forceClear) {
     if (vrDisplay && scope.isPresenting) {
       const autoUpdate = scene.autoUpdate;
 
@@ -196,7 +197,9 @@ const VREffect = function(renderer, onError) {
       }
 
       if (Array.isArray(scene)) {
-        console.warn('THREE.VREffect.render() no longer supports arrays. Use object.layers instead.');
+        console.warn(
+          "VREffect.render() no longer supports arrays. Use object.layers instead."
+        );
         scene = scene[0];
       }
 
@@ -211,13 +214,13 @@ const VREffect = function(renderer, onError) {
         const layer = layers[0];
 
         leftBounds =
-          layer.leftBounds !== null && layer.leftBounds.length === 4 ?
-            layer.leftBounds :
-            defaultLeftBounds;
+          layer.leftBounds !== null && layer.leftBounds.length === 4
+            ? layer.leftBounds
+            : defaultLeftBounds;
         rightBounds =
-          layer.rightBounds !== null && layer.rightBounds.length === 4 ?
-            layer.rightBounds :
-            defaultRightBounds;
+          layer.rightBounds !== null && layer.rightBounds.length === 4
+            ? layer.rightBounds
+            : defaultRightBounds;
       } else {
         leftBounds = defaultLeftBounds;
         rightBounds = defaultRightBounds;
@@ -227,13 +230,13 @@ const VREffect = function(renderer, onError) {
         x: Math.round(size.width * leftBounds[0]),
         y: Math.round(size.height * leftBounds[1]),
         width: Math.round(size.width * leftBounds[2]),
-        height: Math.round(size.height * leftBounds[3])
+        height: Math.round(size.height * leftBounds[3]),
       };
       renderRectR = {
         x: Math.round(size.width * rightBounds[0]),
         y: Math.round(size.height * rightBounds[1]),
         width: Math.round(size.width * rightBounds[2]),
-        height: Math.round(size.height * rightBounds[3])
+        height: Math.round(size.height * rightBounds[3]),
       };
 
       if (renderTarget) {
@@ -289,8 +292,8 @@ const VREffect = function(renderer, onError) {
           cameraR.scale
         );
       } else {
-        const eyeParamsL = vrDisplay.getEyeParameters('left');
-        const eyeParamsR = vrDisplay.getEyeParameters('right');
+        const eyeParamsL = vrDisplay.getEyeParameters("left");
+        const eyeParamsR = vrDisplay.getEyeParameters("right");
 
         cameraL.projectionMatrix = fovToProjection(
           eyeParamsL.fieldOfView,
@@ -398,9 +401,9 @@ const VREffect = function(renderer, onError) {
     renderer.render(scene, camera, renderTarget, forceClear);
   };
 
-  this.dispose = function() {
+  this.dispose = function () {
     window.removeEventListener(
-      'vrdisplaypresentchange',
+      "vrdisplaypresentchange",
       onVRDisplayPresentChange,
       false
     );
@@ -504,12 +507,11 @@ const VREffect = function(renderer, onError) {
       upTan: Math.tan(fov.upDegrees * DEG2RAD),
       downTan: Math.tan(fov.downDegrees * DEG2RAD),
       leftTan: Math.tan(fov.leftDegrees * DEG2RAD),
-      rightTan: Math.tan(fov.rightDegrees * DEG2RAD)
+      rightTan: Math.tan(fov.rightDegrees * DEG2RAD),
     };
 
     return fovPortToProjection(fovPort, rightHanded, zNear, zFar);
   }
 };
 
-THREE.VREffect = VREffect;
 export default VREffect;
