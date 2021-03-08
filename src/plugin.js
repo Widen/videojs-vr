@@ -1,7 +1,7 @@
 import { version as VERSION } from "../package.json";
 import window from "global/window";
 import document from "global/document";
-import * as WebVRPolyfill from "webvr-polyfill";
+import WebVRPolyfill from "webvr-polyfill";
 import videojs from "video.js";
 import * as THREE from "three";
 import VRControls from "./three/VRControls.js";
