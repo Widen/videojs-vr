@@ -286,6 +286,7 @@ class VR extends Plugin {
           vertexShader: `
 varying vec2 vUv;
 uniform mat3 mapMatrix;
+
 void main() {
   vUv = (mapMatrix * vec3(uv, 1.)).xy;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.);
@@ -296,13 +297,19 @@ uniform sampler2D mapped;
 uniform vec2 faceWH;
 uniform vec2 vidWH;
 uniform float contCorrect;
+
 const float PI = 3.1415926535897932384626433832795;
+
 void main() {
   vec2 corner = vUv - mod(vUv, faceWH) + vec2(0, contCorrect / vidWH.y);
+
   vec2 faceWHadj = faceWH - vec2(0, contCorrect * 2. / vidWH.y);
+
   vec2 p = (vUv - corner) / faceWHadj - .5;
   vec2 q = 2. / PI * atan(2. * p) + .5;
+
   vec2 eUv = corner + q * faceWHadj;
+
   gl_FragColor = texture2D(mapped, eUv);
 }`
         });
