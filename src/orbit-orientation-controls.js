@@ -1,6 +1,6 @@
-import * as THREE from "three";
-import OrbitControls from "three/examples/js/controls/OrbitControls.js";
-import DeviceOrientationControls from "three/examples/js/controls/DeviceOrientationControls.js";
+import * as THREE from 'three';
+import OrbitControls from 'three/examples/js/controls/OrbitControls.js';
+import DeviceOrientationControls from 'three/examples/js/controls/DeviceOrientationControls.js';
 
 /**
  * Convert a quaternion to an angle
@@ -79,7 +79,7 @@ class OrbitOrientationControls {
       const currentAngle = Quat2Angle(quat.x, quat.y, quat.z, quat.w);
 
       // we also have to store the last angle since quaternions are b
-      if (typeof this.lastAngle_ === "undefined") {
+      if (typeof this.lastAngle_ === 'undefined') {
         this.lastAngle_ = currentAngle;
       }
 
