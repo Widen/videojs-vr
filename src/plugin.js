@@ -21,7 +21,7 @@ const defaults = {
   omnitone: false,
   forceCardboard: false,
   omnitoneOptions: {},
-  projection: 'AUTO',
+  projection: 'AUTO'
 };
 
 const errors = {
@@ -29,20 +29,20 @@ const errors = {
     headline: '360 is out of date',
     type: '360_OUT_OF_DATE',
     message:
-      "Your browser supports 360 but not the latest version. See <a href='http://webvr.info'>http://webvr.info</a> for more info.",
+      "Your browser supports 360 but not the latest version. See <a href='http://webvr.info'>http://webvr.info</a> for more info."
   },
   'web-vr-not-supported': {
     headline: '360 not supported on this device',
     type: '360_NOT_SUPPORTED',
     message:
-      "Your browser does not support 360. See <a href='http://webvr.info'>http://webvr.info</a> for assistance.",
+      "Your browser does not support 360. See <a href='http://webvr.info'>http://webvr.info</a> for assistance."
   },
   'web-vr-hls-cors-not-supported': {
     headline: '360 HLS video not supported on this device',
     type: '360_NOT_SUPPORTED',
     message:
-      "Your browser/device does not support HLS 360 video. See <a href='http://webvr.info'>http://webvr.info</a> for assistance.",
-  },
+      "Your browser/device does not support HLS 360 video. See <a href='http://webvr.info'>http://webvr.info</a> for assistance."
+  }
 };
 
 const Plugin = videojs.getPlugin('plugin');
@@ -79,7 +79,7 @@ class VR extends Plugin {
 
     this.polyfill_ = new WebVRPolyfill({
       // do not show rotate instructions
-      ROTATE_INSTRUCTIONS_DISABLED: true,
+      ROTATE_INSTRUCTIONS_DISABLED: true
     });
     this.polyfill_ = new WebVRPolyfill();
 
@@ -154,7 +154,7 @@ class VR extends Plugin {
       this.movieMaterial = new THREE.MeshBasicMaterial({
         map: this.videoTexture,
         overdraw: true,
-        side: THREE.BackSide,
+        side: THREE.BackSide
       });
 
       this.movieScreen = new THREE.Mesh(this.movieGeometry, this.movieMaterial);
@@ -187,7 +187,7 @@ class VR extends Plugin {
       this.movieMaterial = new THREE.MeshBasicMaterial({
         map: this.videoTexture,
         overdraw: true,
-        side: THREE.BackSide,
+        side: THREE.BackSide
       });
 
       this.movieScreen = new THREE.Mesh(this.movieGeometry, this.movieMaterial);
@@ -220,7 +220,7 @@ class VR extends Plugin {
       this.movieMaterial = new THREE.MeshBasicMaterial({
         map: this.videoTexture,
         overdraw: true,
-        side: THREE.BackSide,
+        side: THREE.BackSide
       });
 
       this.movieScreen = new THREE.Mesh(this.movieGeometry, this.movieMaterial);
@@ -237,44 +237,44 @@ class VR extends Plugin {
       this.movieMaterial = new THREE.MeshBasicMaterial({
         map: this.videoTexture,
         overdraw: true,
-        side: THREE.BackSide,
+        side: THREE.BackSide
       });
 
       const left = [
         new THREE.Vector2(0, 0.5),
         new THREE.Vector2(0.333, 0.5),
         new THREE.Vector2(0.333, 1),
-        new THREE.Vector2(0, 1),
+        new THREE.Vector2(0, 1)
       ];
       const right = [
         new THREE.Vector2(0.333, 0.5),
         new THREE.Vector2(0.666, 0.5),
         new THREE.Vector2(0.666, 1),
-        new THREE.Vector2(0.333, 1),
+        new THREE.Vector2(0.333, 1)
       ];
       const top = [
         new THREE.Vector2(0.666, 0.5),
         new THREE.Vector2(1, 0.5),
         new THREE.Vector2(1, 1),
-        new THREE.Vector2(0.666, 1),
+        new THREE.Vector2(0.666, 1)
       ];
       const bottom = [
         new THREE.Vector2(0, 0),
         new THREE.Vector2(0.333, 0),
         new THREE.Vector2(0.333, 0.5),
-        new THREE.Vector2(0, 0.5),
+        new THREE.Vector2(0, 0.5)
       ];
       const front = [
         new THREE.Vector2(0.333, 0),
         new THREE.Vector2(0.666, 0),
         new THREE.Vector2(0.666, 0.5),
-        new THREE.Vector2(0.333, 0.5),
+        new THREE.Vector2(0.333, 0.5)
       ];
       const back = [
         new THREE.Vector2(0.666, 0),
         new THREE.Vector2(1, 0),
         new THREE.Vector2(1, 0.5),
-        new THREE.Vector2(0.666, 0.5),
+        new THREE.Vector2(0.666, 0.5)
       ];
 
       this.movieGeometry.faceVertexUvs[0] = [];
@@ -291,12 +291,12 @@ class VR extends Plugin {
       this.movieGeometry.faceVertexUvs[0][6] = [
         bottom[2],
         bottom[1],
-        bottom[3],
+        bottom[3]
       ];
       this.movieGeometry.faceVertexUvs[0][7] = [
         bottom[1],
         bottom[0],
-        bottom[3],
+        bottom[3]
       ];
 
       this.movieGeometry.faceVertexUvs[0][8] = [front[2], front[1], front[3]];
@@ -326,7 +326,7 @@ class VR extends Plugin {
       this.movieGeometry = new THREE.BufferGeometry().fromGeometry(geometry);
       this.movieMaterial = new THREE.MeshBasicMaterial({
         map: this.videoTexture,
-        overdraw: true,
+        overdraw: true
       });
       this.movieScreen = new THREE.Mesh(this.movieGeometry, this.movieMaterial);
       // display in left eye only
@@ -348,7 +348,7 @@ class VR extends Plugin {
       this.movieGeometry = new THREE.BufferGeometry().fromGeometry(geometry);
       this.movieMaterial = new THREE.MeshBasicMaterial({
         map: this.videoTexture,
-        overdraw: true,
+        overdraw: true
       });
       this.movieScreen = new THREE.Mesh(this.movieGeometry, this.movieMaterial);
       // display in right eye only
@@ -369,14 +369,14 @@ class VR extends Plugin {
             mapMatrix: { value: mapMatrix },
             contCorrect: { value: contCorrect },
             faceWH: {
-              value: new THREE.Vector2(1 / 3, 1 / 2).applyMatrix3(scaleMatrix),
+              value: new THREE.Vector2(1 / 3, 1 / 2).applyMatrix3(scaleMatrix)
             },
             vidWH: {
               value: new THREE.Vector2(
                 this.videoTexture.image.videoWidth,
                 this.videoTexture.image.videoHeight
-              ).applyMatrix3(scaleMatrix),
-            },
+              ).applyMatrix3(scaleMatrix)
+            }
           },
           vertexShader: `
 varying vec2 vUv;
@@ -406,44 +406,44 @@ void main() {
   vec2 eUv = corner + q * faceWHadj;
 
   gl_FragColor = texture2D(mapped, eUv);
-}`,
+}`
         });
 
         const right = [
           new THREE.Vector2(0, 1 / 2),
           new THREE.Vector2(1 / 3, 1 / 2),
           new THREE.Vector2(1 / 3, 1),
-          new THREE.Vector2(0, 1),
+          new THREE.Vector2(0, 1)
         ];
         const front = [
           new THREE.Vector2(1 / 3, 1 / 2),
           new THREE.Vector2(2 / 3, 1 / 2),
           new THREE.Vector2(2 / 3, 1),
-          new THREE.Vector2(1 / 3, 1),
+          new THREE.Vector2(1 / 3, 1)
         ];
         const left = [
           new THREE.Vector2(2 / 3, 1 / 2),
           new THREE.Vector2(1, 1 / 2),
           new THREE.Vector2(1, 1),
-          new THREE.Vector2(2 / 3, 1),
+          new THREE.Vector2(2 / 3, 1)
         ];
         const bottom = [
           new THREE.Vector2(1 / 3, 0),
           new THREE.Vector2(1 / 3, 1 / 2),
           new THREE.Vector2(0, 1 / 2),
-          new THREE.Vector2(0, 0),
+          new THREE.Vector2(0, 0)
         ];
         const back = [
           new THREE.Vector2(1 / 3, 1 / 2),
           new THREE.Vector2(1 / 3, 0),
           new THREE.Vector2(2 / 3, 0),
-          new THREE.Vector2(2 / 3, 1 / 2),
+          new THREE.Vector2(2 / 3, 1 / 2)
         ];
         const top = [
           new THREE.Vector2(1, 0),
           new THREE.Vector2(1, 1 / 2),
           new THREE.Vector2(2 / 3, 1 / 2),
-          new THREE.Vector2(2 / 3, 0),
+          new THREE.Vector2(2 / 3, 0)
         ];
 
         for (const face of [right, front, left, bottom, back, top]) {
@@ -488,12 +488,12 @@ void main() {
         this.movieGeometry.faceVertexUvs[0][6] = [
           bottom[2],
           bottom[1],
-          bottom[3],
+          bottom[3]
         ];
         this.movieGeometry.faceVertexUvs[0][7] = [
           bottom[1],
           bottom[0],
-          bottom[3],
+          bottom[3]
         ];
 
         this.movieGeometry.faceVertexUvs[0][8] = [front[2], front[1], front[3]];
@@ -563,7 +563,7 @@ void main() {
 
       this.player_.error({
         code: errorObj.code,
-        message,
+        message
       });
     }
   }
@@ -610,7 +610,7 @@ void main() {
               screenX: t.screenX,
               screenY: t.screenY,
               clientX: t.clientX,
-              clientY: t.clientY,
+              clientY: t.clientY
             });
 
             this.renderedCanvas.dispatchEvent(simulatedClick);
@@ -808,7 +808,7 @@ void main() {
       devicePixelRatio: window.devicePixelRatio,
       alpha: false,
       clearColor: 0xffffff,
-      antialias: true,
+      antialias: true
     });
 
     const webglContext = this.renderer.getContext('webgl');
@@ -823,7 +823,7 @@ void main() {
         this.player_.pause();
         this.triggerError_({
           code: 'web-vr-hls-cors-not-supported',
-          dismiss: false,
+          dismiss: false
         });
         throw new Error(e);
       }
@@ -888,7 +888,7 @@ void main() {
             // check if its a half sphere view projection
             halfView: this.currentProjection_ === '180',
             orientation:
-              videojs.browser.IS_IOS || videojs.browser.IS_ANDROID || false,
+              videojs.browser.IS_IOS || videojs.browser.IS_ANDROID || false
           };
 
           if (this.options_.motionControls === false) {
